@@ -3,6 +3,12 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 from pypdf import PdfReader
+from openai import OpenAI
+
+openrouter_client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv("OPENROUTER_API_KEY")
+)
 
 load_dotenv()
 
@@ -204,8 +210,20 @@ with st.chat_message("assistant"):
         try:
             response = model.generate_content(prompt.strip())
             reply = response.text
+
         except Exception:
-            reply = "⚠️ Gemini API quota exceeded. Please try again after a minute."
+            try:
+                completion = openrouter_client.chat.completions.create(
+                    model="meta-llama/llama-3.2-3b-instruct:free",
+                    messages=[
+                        {"role": "user", "content": prompt}
+                    ]
+                )
+
+                reply = completion.choices[0].message.content
+
+            except Exception:
+                reply = "⚠️ Gemini and OpenRouter are currently unavailable. Please try again later."
 
     st.markdown(reply)
 
