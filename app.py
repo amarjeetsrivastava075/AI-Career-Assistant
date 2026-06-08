@@ -228,6 +228,6 @@ st.sidebar.download_button(
 st.markdown("""
 <div class="footer">
 Built with ❤️ using Streamlit & Gemini AI<br>
-Developed by Amarjeet Srivastava | 📞 8795705195
+Developed by Amarjeet Srivastava
 </div>
 """, unsafe_allow_html=True)
