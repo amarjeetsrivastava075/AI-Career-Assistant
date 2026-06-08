@@ -109,7 +109,7 @@ st.sidebar.markdown("## 👨‍💻 Developer")
 st.sidebar.success("Amarjeet Srivastava")
 
 st.sidebar.info("""
-📞 8795705195
+
 
 ### Tech Stack
 - Python
