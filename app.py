@@ -196,23 +196,25 @@ if prompt and prompt.strip():
         {"role":"user","content":prompt}
     )
 
-    with st.chat_message("user"):
+with st.chat_message("user"):
         st.markdown(prompt)
 
-    with st.chat_message("assistant"):
-
-        with st.spinner("🤖 Thinking..."):
+with st.chat_message("assistant"):
+    with st.spinner("🤖 Thinking..."):
+        try:
             response = model.generate_content(prompt.strip())
             reply = response.text
+        except Exception:
+            reply = "⚠️ Gemini API quota exceeded. Please try again after a minute."
 
-        st.markdown(reply)
+    st.markdown(reply)
 
     st.session_state.messages.append(
-        {"role":"assistant","content":reply}
+        {"role": "assistant", "content": reply}
     )
+
 if st.sidebar.button("Clear Chat"):
     st.session_state.messages = []
-   
 
 chat_text = ""
 
