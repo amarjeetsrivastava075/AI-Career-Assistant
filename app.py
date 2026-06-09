@@ -206,28 +206,14 @@ with st.chat_message("assistant"):
             response = model.generate_content(prompt.strip())
             reply = response.text
 
-       except Exception:
-    reply = "⚠️ Gemini API quota exceeded. Please try again after a few minutes."
+        except Exception as e:
+            reply = f"Error: {e}"
 
     st.markdown(reply)
 
     st.session_state.messages.append(
         {"role": "assistant", "content": reply}
     )
-
-if st.sidebar.button("Clear Chat"):
-    st.session_state.messages = []
-
-chat_text = ""
-
-for msg in st.session_state.messages:
-    chat_text += f"{msg['role']} : {msg['content']}\n\n"
-
-st.sidebar.download_button(
-    "Download Chat",
-    chat_text,
-    file_name="chat_history.txt"
-)
 st.markdown("""
 <div class="footer">
 Built with ❤️ using Streamlit & Gemini AI<br>
