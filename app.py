@@ -3,12 +3,7 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 from pypdf import PdfReader
-from openai import OpenAI
 
-openrouter_client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=st.secrets["OPENROUTER_API_KEY"]
-)
 
 load_dotenv()
 
@@ -19,7 +14,6 @@ st.set_page_config(
     page_title="AI Career Assistant",
     page_icon="🤖",
     layout="wide"
-)
 
 st.markdown("""
 <style>
@@ -211,19 +205,8 @@ with st.chat_message("assistant"):
             response = model.generate_content(prompt.strip())
             reply = response.text
 
-        except Exception:
-            try:
-                completion = openrouter_client.chat.completions.create(
-                    model="google/gemma-3n-e4b-it:free",
-                    messages=[
-                        {"role": "user", "content": prompt}
-                    ]
-                )
-
-                reply = completion.choices[0].message.content
-
-            except Exception as e:
-                reply = f"OpenRouter Error: {e}"
+       except Exception:
+    reply = "⚠️ Gemini API quota exceeded. Please try again after a few minutes."
 
     st.markdown(reply)
 
