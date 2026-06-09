@@ -214,7 +214,7 @@ with st.chat_message("assistant"):
         except Exception:
             try:
                 completion = openrouter_client.chat.completions.create(
-                    model="meta-llama/llama-3.2-3b-instruct:free",
+                    model="mistralai/mistral-7b-instruct:free",
                     messages=[
                         {"role": "user", "content": prompt}
                     ]
