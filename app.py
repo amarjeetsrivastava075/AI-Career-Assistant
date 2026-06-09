@@ -14,6 +14,7 @@ st.set_page_config(
     page_title="AI Career Assistant",
     page_icon="🤖",
     layout="wide"
+)
 
 st.markdown("""
 <style>
