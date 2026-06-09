@@ -7,7 +7,7 @@ from openai import OpenAI
 
 openrouter_client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY")
+    api_key=st.secrets["OPENROUTER_API_KEY"]
 )
 
 load_dotenv()
@@ -222,8 +222,8 @@ with st.chat_message("assistant"):
 
                 reply = completion.choices[0].message.content
 
-            except Exception:
-                reply = "⚠️ Gemini and OpenRouter are currently unavailable. Please try again later."
+            except Exception as e:
+                reply = f"OpenRouter Error: {e}"
 
     st.markdown(reply)
 
